@@ -24,14 +24,6 @@ def encrypt(message, key):
     return encrypted_message
 
 
-def decrypt(encrypted,key):
-    decrypted_message = ""
-    counter = 0
-    for c in encrypted:
-        decrypted_message = decrypted_message + chr(ord(c) ^ ord(key[counter])) # XOR operation
-        counter = counter + 1
-    return decrypted_message
-
 
 print("Welcome to the One Time Pad encryption algorithm")
 print("Please enter the name of the file you would like to encrypt: ")
@@ -43,7 +35,7 @@ print("The message, encrypted with the One Time Pad algorithm is: ")
 key = generate_key(message)
 encrypted_message = encrypt(message, key)
 print(encrypted_message)
-decrypted_messag = decrypt(encrypted_message,key)
+decrypted_messag = encrypt(encrypted_message,key)
 print("The message, decrypted with the One Time Pad algorithm is: ")
 print(decrypted_messag)
 
