@@ -1,49 +1,50 @@
 # Simple implementation of the One-Time Pad encryption algorithm
-
 import random
 
-# Function that generates a random key of a given length.
-def generate_key(length):
+def open_file(file):
+    message = ""
+    f = open(file, 'r')
+    content = f.read()
+    for c in content:
+        message = message + c
+    return message
+
+def generate_key(message):
     key = ""
-    for i in range(length):
-        key += chr(random.randint(0, 255))
+    for c in message:
+        key = key + chr(random.randint(0, 255))
     return key
 
-
-# Function that encrypts a message using the One-Time Pad algorithm.
 def encrypt(message, key):
     encrypted_message = ""
-    for i in range(len(message)):
-        encrypted_message += chr(ord(message[i]) ^ ord(key[i]))
+    counter = 0
+    for c in message:
+        encrypted_message = encrypted_message + chr(ord(c) ^ ord(key[counter])) # XOR operation
+        counter = counter + 1
     return encrypted_message
 
 
-# Function that decrypts a message using the One-Time Pad algorithm.
-def decrypt(encrypted_message, key):
+def decrypt(encrypted,key):
     decrypted_message = ""
-    for i in range(len(encrypted_message)):
-        decrypted_message += chr(ord(encrypted_message[i]) ^ ord(key[i]))
-    # Return the decrypted message in binary format.
+    counter = 0
+    for c in encrypted:
+        decrypted_message = decrypted_message + chr(ord(c) ^ ord(key[counter])) # XOR operation
+        counter = counter + 1
     return decrypted_message
 
 
-# Test the One-Time Pad encryption algorithm.
-
-# Ask the user for a message to encrypt.
-message = input("Enter a message to encrypt: ")
-
-# Generate a random key of the same length as the message.
-key = generate_key(len(message))
-
-# Encrypt the message using the key.
+print("Welcome to the One Time Pad encryption algorithm")
+print("Please enter the name of the file you would like to encrypt: ")
+file = input()
+message = open_file(file)
+print("The content of the file is: ")
+print(message)
+print("The message, encrypted with the One Time Pad algorithm is: ")
+key = generate_key(message)
 encrypted_message = encrypt(message, key)
+print(encrypted_message)
+decrypted_messag = decrypt(encrypted_message,key)
+print("The message, decrypted with the One Time Pad algorithm is: ")
+print(decrypted_messag)
 
-# Decrypt the encrypted message using the key.
-decrypted_message = decrypt(encrypted_message, key)
 
-# Print the original message, the encrypted message, and the decrypted message.
-print("Original message: " + message)
-print("Key: " + key)
-print("Encrypted message: " + encrypted_message)
-print("Key: " + key)
-print("Decrypted message: " + decrypted_message)
