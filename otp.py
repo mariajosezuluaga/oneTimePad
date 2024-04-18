@@ -5,21 +5,21 @@ def open_file(file):
     message = ""
     f = open(file, 'r')
     content = f.read()
-    for c in content:
-        message = message + c
+    for m in content:
+        message = message + m
     return message
 
 def generate_key(message):
     key = ""
-    for c in message:
+    for m in message:
         key = key + chr(random.randint(0, 255))
     return key
 
 def encrypt(message, key):
     encrypted_message = ""
     counter = 0
-    for c in message:
-        encrypted_message = encrypted_message + chr(ord(c) ^ ord(key[counter])) # XOR operation
+    for m in message:
+        encrypted_message = encrypted_message + chr(ord(m) ^ ord(key[counter])) # XOR operation
         counter = counter + 1
     return encrypted_message
 
